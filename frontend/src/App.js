@@ -58,7 +58,7 @@ function Voting() {
                         <h2>{restaurant.name}</h2>
                         <p><strong>Cuisine:</strong> {restaurant.cuisine || 'Unknown'}</p>
                         <p><strong>Location:</strong> {restaurant.city}, {restaurant.region}</p>
-                        <p><strong>Price:</strong> {restaurant.price || 'N/A'}</p>
+                        <p style={getPriceStyle(restaurant.price)}><strong>Price:</strong> {restaurant.price || 'N/A'}</p>
                     </div>
                 ))}
             </div>
@@ -78,6 +78,26 @@ function Voting() {
     );
 }
 
+function getPriceStyle(price) {
+    switch ((price || '')) {
+        case '$':
+            return { color: '#c5f0a8', fontWeight: 'bold', fontFamily: 'Georgia, serif' };
+        case '$$':
+            return { color: '#88eb44', fontWeight: 'bold', fontFamily: 'Georgia, serif' };
+        case '$$$':
+            return { color: '#72e820', fontWeight: 'bold', fontFamily: 'Georgia, serif' };
+        case '$$$$':
+            return { color: '#66f202', fontWeight: 'bold', fontFamily: 'Georgia, serif' };
+        case '$$$$$':
+            return { color: '#44f702', fontWeight: 'bold', fontFamily: 'Georgia, serif' };
+        case '$$$$$$':
+            return { color: '#03ff18', fontWeight: 'bold', fontFamily: 'Georgia, serif' };
+        default:
+            return { color: '#193605', fontStyle: 'italic' };
+    }
+}
+
+
 function Leaderboard() {
     const [leaderboard, setLeaderboard] = useState([]);
 
@@ -96,7 +116,10 @@ function Leaderboard() {
 
     return (
         <div style={{ textAlign: 'center', fontFamily: 'Arial, sans-serif' }}>
-            <h1>Top Restaurants</h1>
+            <h1>
+              Top Restaurants
+              <div style={{float: "right"}}><Link to="/" style={{ display: 'block', marginTop: '30px', fontSize: '18px' }}>Back to Voting</Link></div>
+            </h1>
             <ol style={{ listStyleType: 'none', padding: 0 }}>
                 {leaderboard.map((entry, index) => (
                     <li key={entry.id} style={{ margin: '10px 0', padding: '10px', border: '1px solid #ccc', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
